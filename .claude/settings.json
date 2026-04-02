@@ -1,0 +1,12 @@
+{
+  "attribution": {
+    "commit": ""
+  },
+  "statusLine": {
+    "type": "command",
+    "command": "sh ~/.claude/statusline-command.sh"
+  },
+  "effortLevel": "medium",
+  "voiceEnabled": true,
+  "model": "opus"
+}
