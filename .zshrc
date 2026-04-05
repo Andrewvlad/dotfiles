@@ -9,6 +9,7 @@ bindkey '^ ' forward-word
 HISTFILE=~/.histfile
 HISTSIZE=100000
 SAVEHIST=100000
+setopt HIST_IGNORE_DUPS # No back-to-back dups
 setopt autocd nomatch
 unsetopt beep
 zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
@@ -21,11 +22,16 @@ zstyle ':completion:*' rehash true                                              
 zstyle ':completion:*' menu select                                                # Highlight menu selection
 
 # The following lines were added by compinstall
-zstyle :compinstall filename '/home/andrewv/.zshrc'
+zstyle :compinstall filename '$HOME/.zshrc'
 
-autoload -Uz compinit
-compinit
-# End of lines added by compinstall
+autoload -Uz compinit && compinit
+
+# Bind up/down keys to search history from what already is in the prompt
+autoload -Uz history-search-en
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "$terminfo[kcuu1]" history-beginning-search-backward
+bindkey "$terminfo[kcud1]" history-beginning-search-forward
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -49,8 +55,10 @@ neofetch
 
 export PATH="$PATH:/opt/nvim/bin"
 
-# Dotfiles bare repo — uncomment to enable, then run:
-#   dotfiles config status.showUntrackedFiles no
-#   dotfiles add ~/.zshrc ~/.bashrc ~/.config/nvim
-#   dotfiles commit -m "Initial dotfiles commit"
-# alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+# Alias NVIM if installed
+if command -v "nvim" &> /dev/null; then
+    alias vi="nvim"
+    alias vim="nvim"
+fi
+
+
