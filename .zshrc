@@ -53,6 +53,8 @@ typeset -g POWERLEVEL9K_INSTANT_PROMPT=off
 # Launch neofetch (sys info)
 neofetch
 
+# Dependant on where your NVIM is installed
+export PATH="$PATH:/opt/nvim/"
 export PATH="$PATH:/opt/nvim/bin"
 
 # Alias NVIM if installed
@@ -60,5 +62,3 @@ if command -v "nvim" &> /dev/null; then
     alias vi="nvim"
     alias vim="nvim"
 fi
-
-
