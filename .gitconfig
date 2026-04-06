@@ -15,6 +15,7 @@
     unstage = reset HEAD --
     lg = log --oneline --graph --decorate --all
     recent = branch --sort=-committerdate --format='%(committerdate:relative)\t%(refname:short)'
+    purge = !git branch --v | grep '\\[gone\\]' | awk '{print $1}' | xargs git branch -D
 [fetch]
 	prune = true
 [pull]
