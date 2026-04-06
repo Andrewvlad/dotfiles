@@ -1,3 +1,5 @@
+# WIP
+
 Run the following command to install these dotfiles to a new system:
 
 ```
@@ -10,6 +12,11 @@ How to add dotfiles to the config:
 config add ~/.config/something/somefile
 config commit -m "add somefile"
 config push
+```
+
+Switch to using ZSH:
+```
+chsh -s $(which zsh)
 ```
 
 If you don't have the matching services installed:
