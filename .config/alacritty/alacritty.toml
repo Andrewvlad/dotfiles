@@ -7,7 +7,7 @@ style = "Regular"
 
 [window]
 decorations = "Full"
-opacity = 0.6
+opacity = 0.9
 
 [[keyboard.bindings]]
 key = "Return"
