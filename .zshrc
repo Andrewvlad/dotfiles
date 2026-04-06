@@ -13,8 +13,12 @@ HISTFILE=~/.histfile
 HISTSIZE=100000
 SAVEHIST=100000
 setopt HIST_IGNORE_DUPS # No back-to-back dups
+setopt SHARE_HISTORY    # Sync history across sessions
 unsetopt beep
-zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
+zshaddhistory() {
+    local -a words=("${(z)1}")
+    whence "${words[1]}" >| /dev/null || return 1
+}
 # End of lines configured by zsh-newuser-install
 
 # Tab completion
