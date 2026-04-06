@@ -119,8 +119,8 @@ fi
 
 . "$HOME/.local/bin/env"
 
-# Launch neofetch (sys info)
-neofetch
+# Launch fastfetch (sys info)
+fastfetch
 
 export PATH="$PATH:/opt/nvim/"
 export PATH="$PATH:/opt/nvim/bin"
