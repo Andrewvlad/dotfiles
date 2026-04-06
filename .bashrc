@@ -1,18 +1,14 @@
-# Track the .dotfiles bare repo
-alias config="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
-
-ssty -ixon # Disable ctrl-s and ctrl-q
-shopt -s autocd # Automatically pre-pend CD
-
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
-
 # If not running interactively, don't do anything
 case $- in
 *i*) ;;
 *) return ;;
 esac
+
+# Track the .dotfiles bare repo
+alias config="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
+
+ssty -ixon      # Disable ctrl-s and ctrl-q
+shopt -s autocd # Automatically pre-pend CD
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
