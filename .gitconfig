@@ -1,0 +1,15 @@
+[user]
+	email = 50782946+Andrewvlad@users.noreply.github.com
+	name = Andrewvlad
+[credential]
+	helper = store
+[core]
+    editor = nvim
+	excludesfile = ~/.gitignore_global
+[init]
+    defaultBranch = main
+[alias]
+    last = log -1 HEAD
+    st = status
+    uncommit = reset --soft HEAD^
+    unstage = reset HEAD --
