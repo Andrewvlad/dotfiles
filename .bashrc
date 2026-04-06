@@ -1,6 +1,9 @@
 # Track the .dotfiles bare repo
 alias config="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 
+ssty -ixon # Disable ctrl-s and ctrl-q
+shopt -s autocd # Automatically pre-pend CD
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples

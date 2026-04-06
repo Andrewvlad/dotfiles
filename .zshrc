@@ -1,6 +1,9 @@
 # Track the .dotfiles bare repo
 alias config="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 
+ssty -ixon # Disable ctrl-s and ctrl-q
+setopt autocd nomatch # Automatically pre-pend CD
+
 # Auto suggestions
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 bindkey '^ ' forward-word
@@ -10,7 +13,6 @@ HISTFILE=~/.histfile
 HISTSIZE=100000
 SAVEHIST=100000
 setopt HIST_IGNORE_DUPS # No back-to-back dups
-setopt autocd nomatch
 unsetopt beep
 zshaddhistory() { whence ${${(z)1}[1]} >| /dev/null || return 1 }
 # End of lines configured by zsh-newuser-install
