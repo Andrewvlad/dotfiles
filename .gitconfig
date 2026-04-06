@@ -13,3 +13,31 @@
     st = status
     uncommit = reset --soft HEAD^
     unstage = reset HEAD --
+    lg = log --oneline --graph --decorate --all
+    recent = branch --sort=-committerdate --format='%(committerdate:relative)\t%(refname:short)'
+[fetch]
+	prune = true
+[pull]
+    rebase = true
+[merge]
+    conflictstyle = zdiff3
+[rebase]
+    autoStash = true
+[diff]
+    algorithm = histogram
+    colorMoved = default
+[push]
+    default = current
+    autoSetupRemote = true
+[rerere]
+    enabled = true
+[column]
+    ui = auto
+[branch]
+    sort = -committerdate
+[transfer]
+    fsckobjects = true
+[help]
+    autocorrect = prompt
+[commit]
+	verbose = true
