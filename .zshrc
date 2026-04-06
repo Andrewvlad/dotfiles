@@ -1,8 +1,8 @@
 # Track the .dotfiles bare repo
 alias config="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 
-ssty -ixon # Disable ctrl-s and ctrl-q
-setopt autocd nomatch # Automatically pre-pend CD
+stty -ixon # Disable ctrl-s and ctrl-q
+setopt autocd nomatch
 
 # Auto suggestions
 source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh

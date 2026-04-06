@@ -7,7 +7,7 @@ esac
 # Track the .dotfiles bare repo
 alias config="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
 
-ssty -ixon      # Disable ctrl-s and ctrl-q
+stty -ixon      # Disable ctrl-s and ctrl-q
 shopt -s autocd # Automatically pre-pend CD
 
 # don't put duplicate lines or lines starting with space in the history.
