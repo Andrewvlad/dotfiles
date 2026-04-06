@@ -29,7 +29,7 @@ zstyle :compinstall filename '$HOME/.zshrc'
 autoload -Uz compinit && compinit
 
 # Bind up/down keys to search history from what already is in the prompt
-autoload -Uz history-search-en
+autoload -Uz history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "$terminfo[kcuu1]" history-beginning-search-backward
