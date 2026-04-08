@@ -18,4 +18,4 @@
 
 ## Git
 
-- Never stage or commit CLAUDE.md files. They are maintained manually by the user.
+- Never stage or commit CLAUDE.md files.
