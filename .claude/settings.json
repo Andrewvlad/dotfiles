@@ -2,11 +2,29 @@
   "attribution": {
     "commit": ""
   },
+  "model": "opus",
   "statusLine": {
     "type": "command",
     "command": "sh ~/.claude/statusline-command.sh"
   },
+  "enabledPlugins": {
+    "phpstorm-plugin@phpstorm-marketplace": true,
+    "caveman@caveman": true
+  },
+  "extraKnownMarketplaces": {
+    "phpstorm-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "jetbrains/phpstorm-claude-marketplace"
+      }
+    },
+    "caveman": {
+      "source": {
+        "source": "github",
+        "repo": "JuliusBrussee/caveman"
+      }
+    }
+  },
   "effortLevel": "medium",
-  "voiceEnabled": true,
-  "model": "opus"
+  "voiceEnabled": true
 }
