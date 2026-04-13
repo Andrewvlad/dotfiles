@@ -1,15 +1,45 @@
 {
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(/tmp/*)",
+      "Bash(ls *)",
+      "Bash(mkdir *)",
+      "Bash(cat *)",
+      "Bash(which *)",
+      "Bash(chmod *)",
+      "Bash(git diff *)",
+      "Bash(git status *)",
+      "Bash(git log *)",
+      "Bash(git branch *)",
+      "Bash(git show *)",
+      "Bash(nvim --headless *)",
+      "Bash(head *)",
+      "Bash(tail *)",
+      "Bash(echo *)",
+      "Bash(pwd)",
+      "Bash(tree *)",
+      "Bash(lsof *)",
+      "Bash(ss *)",
+      "Bash(systemctl status *)",
+      "Bash(apt list *)",
+      "Read(~/.claude/CLAUDE.md)",
+      "Read(/tmp/*)",
+      "Edit(/tmp/*)",
+      "Write(/tmp/*)"
+    ]
+  },
   "attribution": {
     "commit": ""
   },
-  "model": "opus",
   "statusLine": {
     "type": "command",
     "command": "sh ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
     "phpstorm-plugin@phpstorm-marketplace": true,
-    "caveman@caveman": true
+    "caveman@caveman": true,
+    "frontend-design@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "phpstorm-marketplace": {
@@ -25,6 +55,6 @@
       }
     }
   },
-  "effortLevel": "medium",
+  "effortLevel": "high",
   "voiceEnabled": true
 }
