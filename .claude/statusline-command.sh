@@ -24,6 +24,12 @@
 
 input=$(cat)
 
+# Suppress statusline inside JetBrains embedded terminal — its redraw
+# mangles multi-line output and leaks fragments into scrollback.
+case "$TERMINAL_EMULATOR" in
+    JetBrains-JediTerm) exit 0 ;;
+esac
+
 eval "$(printf '%s' "$input" | jq -r '
     {
         model: (.model.display_name // "Unknown Model"),

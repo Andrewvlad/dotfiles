@@ -23,6 +23,8 @@
       "Bash(ss *)",
       "Bash(systemctl status *)",
       "Bash(apt list *)",
+      "Bash(curl localhost*)",
+      "Bash(curl http://localhost*)",
       "Read(~/.claude/CLAUDE.md)",
       "Read(/tmp/*)",
       "Edit(/tmp/*)",
