@@ -119,8 +119,11 @@ fi
 
 . "$HOME/.local/bin/env"
 
+eval "$(zoxide init bash)"
+
 # Launch fastfetch (sys info)
-fastfetch
+# Skip inside Claude Code, VS Code, Neovim :terminal, JetBrains IDEs
+[[ -z "$CLAUDECODE" && -z "$NVIM" && "$TERM_PROGRAM" != "vscode" && "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]] && fastfetch
 
 export PATH="$PATH:/opt/nvim/"
 export PATH="$PATH:/opt/nvim/bin"

@@ -24,11 +24,30 @@
 
 input=$(cat)
 
-# Suppress statusline inside JetBrains embedded terminal — its redraw
-# mangles multi-line output and leaks fragments into scrollback.
+# JetBrains embedded terminal mangles multi-line statusline output, so
+# render only the single-line usage summary (line1) there.
+jetbrains=""
 case "$TERMINAL_EMULATOR" in
-    JetBrains-JediTerm) exit 0 ;;
+    JetBrains-JediTerm) jetbrains=1 ;;
 esac
+
+# JediTerm miscalculates the cell width of multi-cell unicode (emoji, block
+# bars, arrows), which throws off Claude's in-place statusline redraw and
+# leaves ghost copies on every refresh. ASCII-only glyphs render at one cell
+# each, so the redraw math lines up. Confirmed by reverting and reproducing.
+if [ -n "$jetbrains" ]; then
+    bar_full="#"
+    bar_empty="-"
+    glyph_reset=""
+    glyph_up="+"
+    glyph_down="-"
+else
+    bar_full="█"
+    bar_empty="░"
+    glyph_reset="🗘 "
+    glyph_up="⇡"
+    glyph_down="⇣"
+fi
 
 eval "$(printf '%s' "$input" | jq -r '
     {
@@ -127,11 +146,11 @@ make_bar() {
     bar=""
     i=0
     while [ $i -lt $filled ]; do
-        bar="${bar}█"
+        bar="${bar}${bar_full}"
         i=$((i + 1))
     done
     while [ $i -lt $width ]; do
-        bar="${bar}░"
+        bar="${bar}${bar_empty}"
         i=$((i + 1))
     done
     printf '%s' "$bar"
@@ -151,7 +170,7 @@ format_rl() {
     fi
     reset_time=$(fmt_epoch "$reset_ts" "$date_fmt")
     bar=$(make_bar "$pct")
-    printf '%s%s %s%% 🗘 %s%s' "$color" "$bar" "$pct" "$reset_time" "$RESET"
+    printf '%s%s %s%% %s%s%s' "$color" "$bar" "$pct" "$glyph_reset" "$reset_time" "$RESET"
 }
 
 now=$(date +%s)
@@ -179,10 +198,10 @@ if [ -n "$rl_5h_pct" ] && [ -n "$rl_5h_reset" ]; then
     elapsed_pct=$((elapsed * 100 / window))
     pace_delta=$((rl_5h_pct - elapsed_pct))
     if [ "$pace_delta" -gt 0 ]; then
-        rate_limit_5h_str="${rate_limit_5h_str} ${RED}⇡${pace_delta}%${RESET}"
+        rate_limit_5h_str="${rate_limit_5h_str} ${RED}${glyph_up}${pace_delta}%${RESET}"
     elif [ "$pace_delta" -lt 0 ]; then
         abs_delta=$((-pace_delta))
-        rate_limit_5h_str="${rate_limit_5h_str} ${GREEN}⇣${abs_delta}%${RESET}"
+        rate_limit_5h_str="${rate_limit_5h_str} ${GREEN}${glyph_down}${abs_delta}%${RESET}"
     fi
 fi
 
@@ -230,7 +249,6 @@ time_str="🕐 ${current_time}"
 
 # Build line 1: model/identity → context → cost/lines → rate limits
 line1="${model}"
-[ -n "$session_name" ] && line1="${line1} (${session_name})"
 [ -n "$agent_name" ] && line1="${line1} [${agent_name}]"
 [ -n "$output_style" ] && line1="${line1} ${output_style}"
 [ -n "$vim_mode" ] && line1="${line1} ${vim_mode}"
@@ -241,7 +259,7 @@ if [ -n "$usage_str" ]; then
     line1="${line1} | ${ctx}"
 fi
 
-if [ -n "$block_str" ]; then
+if [ -n "$block_str" ] && [ -z "$jetbrains" ]; then
     cost_seg="Session: ${block_str}"
     lines_seg=""
     [ -n "$lines_added" ] && lines_seg="${GREEN}+${lines_added}${RESET}"
@@ -259,4 +277,8 @@ line2="📁 ${dir_display}"
 [ -n "$worktree" ] && line2="${line2} | 🌳 ${worktree}"
 line2="${line2} | 🌿 ${git_str}"
 
-printf '%s\n%s\n%s' "$line1" "$line2" "$time_str"
+if [ -n "$jetbrains" ]; then
+    printf '%s\n' "$line1"
+else
+    printf '%s\n%s\n%s' "$line1" "$line2" "$time_str"
+fi

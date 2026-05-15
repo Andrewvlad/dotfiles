@@ -4,6 +4,7 @@
 
 - Before every code edit, briefly restate the reasoning behind the specific change you're about to make.
 - Use the AskUserQuestion modal for yes/no and simple choice confirmations instead of asking inline.
+- Do not proactively offer to `/schedule` background agents at the end of replies. Only mention `/schedule` if I explicitly ask about it.
 
 ## Code Style
 

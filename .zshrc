@@ -40,7 +40,8 @@ bindkey "$terminfo[kcuu1]" history-beginning-search-backward
 bindkey "$terminfo[kcud1]" history-beginning-search-forward
 
 # Launch fastfetch (sys info) - must be above P10k instant prompt to preserve colors
-fastfetch
+# Skip inside Claude Code, VS Code, Neovim :terminal, JetBrains IDEs
+[[ -z "$CLAUDECODE" && -z "$NVIM" && "$TERM_PROGRAM" != "vscode" && "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]] && fastfetch
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -56,6 +57,8 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
+# Initialize zoxide
+eval "$(zoxide init zsh)"
 
 # Dependant on where your NVIM is installed
 export PATH="$PATH:/opt/nvim/"
@@ -67,8 +70,13 @@ if command -v "nvim" &> /dev/null; then
     alias vim="nvim"
 fi
 
+# Alias for nice ls
+alias ls="eza --icons"
+alias ll="eza -lh --icons --git"
+alias la="eza -lah --icons --git"
+
 # opencode
-export PATH=/home/andrewv/.opencode/bin:$PATH
+export PATH=~/.opencode/bin:$PATH
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm

@@ -1,4 +1,7 @@
 {
+  "attribution": {
+    "commit": ""
+  },
   "permissions": {
     "allow": [
       "Bash(grep:*)",
@@ -31,9 +34,6 @@
       "Write(/tmp/*)"
     ]
   },
-  "attribution": {
-    "commit": ""
-  },
   "statusLine": {
     "type": "command",
     "command": "sh ~/.claude/statusline-command.sh"
@@ -57,6 +57,8 @@
       }
     }
   },
-  "effortLevel": "high",
+  "feedbackSurveyRate": 0,
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true,
   "voiceEnabled": true
 }
