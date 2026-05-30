@@ -10,6 +10,7 @@
 
 - Use spaces, not tabs. Indentation is 4 spaces.
 - Do not remove comments unless the associated code was also removed.
+- Do not add redundant guards or defensive checks for conditions that cannot occur given the surrounding code, type system, or framework guarantees. Examples to avoid: null/undefined checks on values that were just assigned or are guaranteed by the caller, `isset()`/`array_key_exists()` on keys just set, re-validating input already validated upstream, try/catch blocks that only re-throw, fallback branches for impossible states. Only validate at true system boundaries (user input, external APIs, file/network I/O).
 
 ## File Paths
 

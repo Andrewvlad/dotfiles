@@ -4,7 +4,15 @@
   },
   "permissions": {
     "allow": [
-      "Bash(grep:*)",
+      "Bash(grep *)",
+      "Bash(find *)",
+      "Bash(rg *)",
+      "Bash(awk *)",
+      "Bash(sort *)",
+      "Bash(uniq *)",
+      "Bash(wc *)",
+      "Bash(jq *)",
+      "Bash(diff *)",
       "Bash(/tmp/*)",
       "Bash(ls *)",
       "Bash(mkdir *)",
@@ -58,7 +66,10 @@
     }
   },
   "feedbackSurveyRate": 0,
+  "effortLevel": "xhigh",
+  "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "skipWorkflowUsageWarning": true
 }

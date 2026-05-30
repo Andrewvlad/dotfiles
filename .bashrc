@@ -6,6 +6,8 @@ esac
 
 # Track the .dotfiles bare repo
 alias config="git --git-dir=$HOME/.dotfiles --work-tree=$HOME"
+# Track the nvim config repo
+alias _nvim="git --git-dir=$HOME/.config/nvim/.git --work-tree=$HOME/.config/nvim"
 
 stty -ixon      # Disable ctrl-s and ctrl-q
 shopt -s autocd # Automatically pre-pend CD

@@ -125,6 +125,11 @@ fmt_epoch() {
     case "$out" in
         0[1-9]*) out=${out#0} ;;
     esac
+    # Drop ":00" minutes so a top-of-the-hour reset reads "1PM" not "1:00PM".
+    case "$out" in
+        *:00AM) out="${out%:00AM}AM" ;;
+        *:00PM) out="${out%:00PM}PM" ;;
+    esac
     printf '%s' "$out"
 }
 
@@ -175,7 +180,7 @@ format_rl() {
 
 now=$(date +%s)
 
-rate_limit_5h_str="$(format_rl "$rl_5h_pct" "$rl_5h_reset" "+%I%p")"
+rate_limit_5h_str="$(format_rl "$rl_5h_pct" "$rl_5h_reset" "+%I:%M%p")"
 if [ -n "$rl_5h_pct" ] && [ -n "$rl_5h_reset" ]; then
     diff=$((rl_5h_reset - now))
     if [ "$diff" -gt 0 ]; then
@@ -207,10 +212,9 @@ fi
 
 fmt="+%a"
 if [ -n "$rl_7d_reset" ]; then
-    today_date=$(date "+%Y-%m-%d")
-    reset_date=$(fmt_epoch "$rl_7d_reset" "+%Y-%m-%d")
-    if [ -n "$reset_date" ] && [ "$reset_date" = "$today_date" ]; then
-        fmt="+%I%p"
+    diff=$((rl_7d_reset - now))
+    if [ "$diff" -gt 0 ] && [ "$diff" -lt 86400 ]; then
+        fmt="+%I:%M%p"
     fi
 fi
 
