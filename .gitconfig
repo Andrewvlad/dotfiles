@@ -6,6 +6,7 @@
 [core]
     editor = nvim
 	excludesfile = ~/.gitignore_global
+	autocrlf = input
 [init]
     defaultBranch = main
 [alias]
@@ -24,6 +25,7 @@
     conflictstyle = zdiff3
 [rebase]
     autoStash = true
+	autosquash = true
 [diff]
     algorithm = histogram
     colorMoved = default
@@ -42,3 +44,9 @@
     autocorrect = prompt
 [commit]
 	verbose = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential

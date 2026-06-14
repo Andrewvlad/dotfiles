@@ -10,6 +10,9 @@
 
 - Use spaces, not tabs. Indentation is 4 spaces.
 - Do not remove comments unless the associated code was also removed.
+- Keep comments to a single line of terse sentence-case fragments, not prose. A multi-line comment paragraph justifying a value or approach belongs in the commit message instead.
+- Prefer self-documenting names over a terse name plus an explanatory comment. When a value would need a comment to state its unit or semantic, fold that into the name first (`MISS_MULTIPLIER` not `ADAPT_MISS // weight multiplier on a miss`, `MASTERY_STREAK` not `PROG_MASTER // consecutive corrects to learn a card`). Keep the comment only when the name genuinely cannot carry the meaning (an opaque magic number at a true config point, non-obvious rationale).
+- Never use em dashes or semicolons in anything you write for me: comments, commit messages, docs, replies. Punctuate with periods, commas, colons, and parentheses. A spaced hyphen serves as a dash. (Semicolons as code statement terminators are fine.)
 - Do not add redundant guards or defensive checks for conditions that cannot occur given the surrounding code, type system, or framework guarantees. Examples to avoid: null/undefined checks on values that were just assigned or are guaranteed by the caller, `isset()`/`array_key_exists()` on keys just set, re-validating input already validated upstream, try/catch blocks that only re-throw, fallback branches for impossible states. Only validate at true system boundaries (user input, external APIs, file/network I/O).
 
 ## File Paths
@@ -36,5 +39,6 @@
 ## Git
 
 - Never stage or commit CLAUDE.md files. They are already ignored by the global git ignore.
-- Proactively suggest commits when a logical unit of work is complete. Don't wait for the user to ask.
+- Do not proactively offer commits. Only suggest or make commits when I explicitly ask.
+- When I do ask, suggest commits inline in plain text — do NOT use the AskUserQuestion modal for commit offers (this overrides the "use the modal for confirmations" default for commit offers specifically).
 - Prefer single-line commit messages when the change is straightforward enough to summarize concisely.

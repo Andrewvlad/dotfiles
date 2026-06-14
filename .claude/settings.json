@@ -42,6 +42,7 @@
       "Write(/tmp/*)"
     ]
   },
+  "workflowKeywordTriggerEnabled": false,
   "statusLine": {
     "type": "command",
     "command": "sh ~/.claude/statusline-command.sh"
@@ -66,10 +67,16 @@
     }
   },
   "feedbackSurveyRate": 0,
+  "spinnerTipsEnabled": false,
   "effortLevel": "xhigh",
+  "awaySummaryEnabled": false,
+  "skipWorkflowUsageWarning": true,
+  "theme": "auto",
+  "editorMode": "normal",
+  "preferredNotifChannel": "auto",
+  "remoteControlAtStartup": true,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "skipWorkflowUsageWarning": true
+  "voiceEnabled": true
 }

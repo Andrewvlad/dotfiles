@@ -82,7 +82,7 @@ else
     usage_str=""
 fi
 
-git_str=""
+git_str=""  # stays empty outside a repo -> git segment is omitted below
 if git rev-parse --git-dir >/dev/null 2>&1; then
     branch=$(git branch --show-current 2>/dev/null)
     [ -z "$branch" ] && branch=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
@@ -105,12 +105,12 @@ if git rev-parse --git-dir >/dev/null 2>&1; then
     [ "${untracked:-0}" -gt 0 ] && git_str="${git_str} ${RED}?${untracked}${RESET}"
     [ "${ahead:-0}" -gt 0 ]     && git_str="${git_str} ↑${ahead}"
     [ "${behind:-0}" -gt 0 ]    && git_str="${git_str} ↓${behind}"
-else
-    git_str="no branch"
 fi
 
 if [ -n "$total_cost" ]; then
     block_str=$(awk -v c="$total_cost" 'BEGIN { printf "$%.2f", c }')
+    # Hide the Session segment when the cost rounds to nothing.
+    [ "$block_str" = '$0.00' ] && block_str=""
 else
     block_str=""
 fi
@@ -279,7 +279,7 @@ fi
 [ -n "$rate_limit_7d_str" ] && line1="${line1} | 7d: ${rate_limit_7d_str}"
 line2="📁 ${dir_display}"
 [ -n "$worktree" ] && line2="${line2} | 🌳 ${worktree}"
-line2="${line2} | 🌿 ${git_str}"
+[ -n "$git_str" ] && line2="${line2} | 🌿 ${git_str}"
 
 if [ -n "$jetbrains" ]; then
     printf '%s\n' "$line1"

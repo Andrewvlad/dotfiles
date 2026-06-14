@@ -9,7 +9,23 @@ style = "Regular"
 decorations = "Full"
 opacity = 0.9
 
+# Swap copy/paste with their Ctrl+Shift mirror
 [[keyboard.bindings]]
-key = "Return"
-mods = "Shift"
-chars = "\u001B\r"
+key = "C"
+mods = "Control"
+action = "Copy"
+
+[[keyboard.bindings]]
+key = "C"
+mods = "Control|Shift"
+chars = "\u0003"
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Control"
+action = "Paste"
+
+[[keyboard.bindings]]
+key = "V"
+mods = "Control|Shift"
+chars = "\u0016"
