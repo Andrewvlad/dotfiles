@@ -1,6 +1,7 @@
 {
   "attribution": {
-    "commit": ""
+    "commit": "",
+    "sessionUrl": false
   },
   "permissions": {
     "allow": [
@@ -50,7 +51,8 @@
   "enabledPlugins": {
     "phpstorm-plugin@phpstorm-marketplace": true,
     "caveman@caveman": true,
-    "frontend-design@claude-plugins-official": true
+    "frontend-design@claude-plugins-official": true,
+    "voicemode@voicemode": true
   },
   "extraKnownMarketplaces": {
     "phpstorm-marketplace": {
@@ -63,6 +65,12 @@
       "source": {
         "source": "github",
         "repo": "JuliusBrussee/caveman"
+      }
+    },
+    "voicemode": {
+      "source": {
+        "source": "github",
+        "repo": "mbailey/voicemode"
       }
     }
   },
@@ -78,5 +86,6 @@
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "tui": "fullscreen"
 }

@@ -52,6 +52,7 @@ fi
 eval "$(printf '%s' "$input" | jq -r '
     {
         model: (.model.display_name // "Unknown Model"),
+        session_id: (.session_id // ""),
         used: (.context_window.used_percentage | if . != null then tostring else "" end),
         exceeds_200k: (if .exceeds_200k_tokens == true then "true" else "" end),
         worktree: (.worktree.name // ""),
@@ -285,4 +286,12 @@ if [ -n "$jetbrains" ]; then
     printf '%s\n' "$line1"
 else
     printf '%s\n%s\n%s' "$line1" "$line2" "$time_str"
+fi
+
+# Mirror an ANSI-stripped copy for the VoiceMode LAN phone footer, keyed by session.
+if [ -n "$session_id" ]; then
+    sl_dir="$HOME/.claude/statusline"
+    mkdir -p "$sl_dir" 2>/dev/null
+    printf '%s\n%s\n%s\n' "$line1" "$line2" "$time_str" \
+        | sed "s/${ESC}\[[0-9;]*m//g" > "$sl_dir/${session_id}.txt" 2>/dev/null || true
 fi
