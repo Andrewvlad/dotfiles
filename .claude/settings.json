@@ -3,6 +3,9 @@
     "commit": "",
     "sessionUrl": false
   },
+  "env": {
+    "CLAUDE_CODE_SHELL": "/usr/bin/bash"
+  },
   "permissions": {
     "allow": [
       "Bash(grep *)",
@@ -43,41 +46,32 @@
       "Write(/tmp/*)"
     ]
   },
+  "model": "opus",
   "workflowKeywordTriggerEnabled": false,
   "statusLine": {
     "type": "command",
     "command": "sh ~/.claude/statusline-command.sh"
   },
   "enabledPlugins": {
-    "phpstorm-plugin@phpstorm-marketplace": true,
-    "caveman@caveman": true,
     "frontend-design@claude-plugins-official": true,
-    "voicemode@voicemode": true
+    "modern-web-guidance@googlechrome": true,
+    "mattpocock-skills@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
-    "phpstorm-marketplace": {
+    "googlechrome": {
       "source": {
         "source": "github",
-        "repo": "jetbrains/phpstorm-claude-marketplace"
-      }
-    },
-    "caveman": {
-      "source": {
-        "source": "github",
-        "repo": "JuliusBrussee/caveman"
-      }
-    },
-    "voicemode": {
-      "source": {
-        "source": "github",
-        "repo": "mbailey/voicemode"
-      }
+        "repo": "GoogleChrome/modern-web-guidance"
+      },
+      "autoUpdate": true
     }
   },
   "feedbackSurveyRate": 0,
+  "feedbackDrafts": "off",
   "spinnerTipsEnabled": false,
   "effortLevel": "xhigh",
   "awaySummaryEnabled": false,
+  "tui": "fullscreen",
   "skipWorkflowUsageWarning": true,
   "theme": "auto",
   "editorMode": "normal",
@@ -86,6 +80,5 @@
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "voiceEnabled": true,
-  "tui": "fullscreen"
+  "voiceEnabled": true
 }

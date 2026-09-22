@@ -227,11 +227,27 @@ if [ -n "$rl_7d_pct" ] && [ -n "$rl_7d_reset" ]; then
         hours=$(((diff % 86400) / 3600))
         minutes=$(((diff % 3600) / 60))
         if [ "$days" -gt 0 ]; then
-            rate_limit_7d_str="${rate_limit_7d_str} (${days}d)"
+            countdown="${days}d"
         elif [ "$hours" -gt 0 ]; then
-            rate_limit_7d_str="${rate_limit_7d_str} (${hours}h)"
+            countdown="${hours}h"
         else
-            rate_limit_7d_str="${rate_limit_7d_str} (${minutes}m)"
+            countdown="${minutes}m"
+        fi
+
+        # Color the countdown by how far over pace: >=10 red, >=5 yellow, else plain.
+        window=$((7 * 86400))
+        window_start=$((rl_7d_reset - window))
+        elapsed=$((now - window_start))
+        [ "$elapsed" -lt 0 ] && elapsed=0
+        [ "$elapsed" -gt "$window" ] && elapsed=$window
+        elapsed_pct=$((elapsed * 100 / window))
+        pace_delta=$((rl_7d_pct - elapsed_pct))
+        if [ "$pace_delta" -ge 10 ]; then
+            rate_limit_7d_str="${rate_limit_7d_str} ${RED}(${countdown})${RESET}"
+        elif [ "$pace_delta" -ge 5 ]; then
+            rate_limit_7d_str="${rate_limit_7d_str} ${YELLOW}(${countdown})${RESET}"
+        else
+            rate_limit_7d_str="${rate_limit_7d_str} (${countdown})"
         fi
     fi
 fi
@@ -260,7 +276,10 @@ line1="${model}"
 
 if [ -n "$usage_str" ]; then
     ctx="Context: ${usage_str}"
-    [ -n "$exceeds_200k" ] && ctx="${ctx} (${RED}⚠ >200k${RESET})"
+    # Gate >200k on live context: /compact resets % but the harness flag lags.
+    warn_min_ctx_pct=15
+    [ -n "$exceeds_200k" ] && [ "${used%.*}" -ge "$warn_min_ctx_pct" ] \
+        && ctx="${ctx} (${RED}⚠ >200k${RESET})"
     line1="${line1} | ${ctx}"
 fi
 

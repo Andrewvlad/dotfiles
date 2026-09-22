@@ -1,19 +1,28 @@
 #!/usr/bin/env bash
-git clone --bare git@github.com:Andrewvlad/dotfiles.git $HOME/.dotfiles
-# define config alias locally since the dotfiles
-# aren't installed on the system yet
+
+git clone --bare git@github.com:Andrewvlad/dotfiles.git "$HOME/.dotfiles"
+
+# "config" function since we don't have the dotfile aliases yet
 function config {
-   git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME $@
+    git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" "$@"
 }
-# create a directory to backup existing dotfiles to
-mkdir -p .dotfiles-backup
-config checkout
-if [ $? = 0 ]; then
-  echo "Checked out dotfiles from git@github.com:Andrewvlad/dotfiles.git";
-  else
-    echo "Moving existing dotfiles to ~/.dotfiles-backup";
-    config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .dotfiles-backup/{}
+
+# create backup location
+mkdir -p "$HOME/.dotfiles-backup"
+
+if config checkout; then
+    # clean checkout
+    echo "Checked out dotfiles into $HOME"
+else
+    echo "Moving conflicting files to ~/.dotfiles-backup"
+
+    # backup existing local dotfiles
+    config checkout 2>&1 | grep -E "^\s+\S" | awk '{print $1}' | while read -r file; do
+        mkdir -p "$HOME/.dotfiles-backup/$(dirname "$file")"
+        mv "$HOME/$file" "$HOME/.dotfiles-backup/$file"
+    done
+
+    config checkout
 fi
-# checkout dotfiles from repo
-config checkout
+
 config config status.showUntrackedFiles no

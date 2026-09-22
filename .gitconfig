@@ -1,12 +1,14 @@
 [user]
 	email = 50782946+Andrewvlad@users.noreply.github.com
 	name = Andrewvlad
+	signingkey = ~/.ssh/id_ed25519.pub
 [credential]
 	helper = store
 [core]
     editor = nvim
 	excludesfile = ~/.gitignore_global
 	autocrlf = input
+	pager = delta
 [init]
     defaultBranch = main
 [alias]
@@ -17,6 +19,7 @@
     lg = log --oneline --graph --decorate --all
     recent = branch --sort=-committerdate --format='%(committerdate:relative)\t%(refname:short)'
     purge = !git branch --v | grep '\\[gone\\]' | awk '{print $1}' | xargs git branch -D
+	sync = "!f() { branch=$(git symbolic-ref --short -q HEAD) || { echo \"detached HEAD, check out a branch first\"; return 1; }; case \"$1\" in up) [ \"$branch\" = \"wip/laptop\" ] && { echo \"on wip/laptop itself, nothing to do\"; return 1; }; git diff --quiet HEAD -- || { git commit -qam wip && echo \"wip committed\"; }; git branch -f wip/laptop HEAD && echo \"up: $branch -> wip/laptop @ $(git rev-parse --short HEAD)\";; down) git rev-parse -q --verify wip/laptop >/dev/null || { echo \"no wip/laptop branch yet\"; return 1; }; git diff --quiet HEAD -- || { echo \"uncommitted changes on $branch - commit, stash, or run: git sync up\"; return 1; }; old=$(git rev-parse --short HEAD); git reset -q --hard wip/laptop; [ \"$(git log -1 --format=%s)\" = \"wip\" ] && git reset -q --soft HEAD^ && un=\" (wip uncommitted)\"; echo \"down: wip/laptop -> $branch @ $(git rev-parse --short HEAD)$un   [was $old, in reflog]\";; *) echo \"usage: git sync up|down\"; return 1;; esac; }; f"
 [fetch]
 	prune = true
 [pull]
@@ -44,9 +47,14 @@
     autocorrect = prompt
 [commit]
 	verbose = true
+	gpgsign = true
 [credential "https://github.com"]
-	helper = 
+	helper =
 	helper = !/usr/bin/gh auth git-credential
 [credential "https://gist.github.com"]
-	helper = 
+	helper =
 	helper = !/usr/bin/gh auth git-credential
+[gpg]
+	format = ssh
+[tag]
+	gpgsign = true
