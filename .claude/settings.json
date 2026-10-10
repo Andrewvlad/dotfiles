@@ -6,6 +6,30 @@
   "env": {
     "CLAUDE_CODE_SHELL": "/usr/bin/bash"
   },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/writing-check.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/writing-check.sh"
+          }
+        ]
+      }
+    ]
+  },
   "permissions": {
     "allow": [
       "Bash(grep *)",
@@ -47,6 +71,7 @@
     ]
   },
   "model": "opus",
+  "autoMemoryDirectory": "~/.claude/projects/-home-andrewv/memory",
   "workflowKeywordTriggerEnabled": false,
   "statusLine": {
     "type": "command",
